@@ -1,0 +1,75 @@
+<html lang="zh-CN">
+
+<head>
+    <title>PARSE TREE</title>
+</head>
+
+<body>
+    <!-- the demo root element -->
+    <div class="context">
+        <h2>Parse Tree
+</h2>
+    <ul id="demo">
+        <item class="item" :model="treeData">
+        </item>
+    </ul>
+    <div>
+    <script src="vue.js"></script>
+
+    <!-- item template -->
+    <script type="text/x-template" id="item-template">
+        <li>
+        <div v-if="isError">
+            {{ model.error}}
+        </div>
+        <div
+            :class="{bold: isFolder}"
+            @click="toggle">
+            
+            <span v-if="isFolder">[{{ open ? '-' : ''}}<b style="color:blue">{{ open ? '' : '+'}}</b>]</span>
+            {{ model.name }}
+            <span v-if="model.line!=0">
+                ({{ model.line }},{{ model.col }}) 
+            </span>
+            <b style="color:green"> {{model.info}} </b>
+        </div>
+        <ul v-show="open" v-if="isFolder">
+            <item
+            class="item"
+            v-for="(model, index) in model.children"
+            :key="index"
+            :model="model">
+            </item>
+        </ul>
+        </li>
+</script>
+    <script src="data.js"></script>
+</body>
+<style>
+body {
+font-family: Menlo, Consolas, monospace;
+color: #444;
+}
+
+.context{
+margin-top: 2%;
+margin-left: 10%;
+}
+
+.item {
+cursor: pointer;
+}
+
+.bold {
+/* font-weight: bold; */
+}
+
+ul {
+padding-left: 1em;
+line-height: 1.5em;
+list-style-type: dot;
+}
+</style>
+
+
+</html>
